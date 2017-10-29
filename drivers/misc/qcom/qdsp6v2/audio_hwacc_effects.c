@@ -743,8 +743,6 @@ static int audio_effects_open(struct inode *inode, struct file *file)
 	init_waitqueue_head(&effects->write_wait);
 	mutex_init(&effects->lock);
 
-	mutex_init(&effects->lock);
-
 	effects->opened = 0;
 	effects->started = 0;
 	effects->buf_alloc = 0;

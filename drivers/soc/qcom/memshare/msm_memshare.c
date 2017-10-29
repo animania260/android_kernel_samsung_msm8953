@@ -534,6 +534,58 @@ static int mem_share_do_ramdump(void)
 	return 0;
 }
 
+/*
+ *  This API initializes the ramdump segments
+ *  with the physical address and size of
+ *  the memshared clients. Extraction of ramdump
+ *  is skipped if memshare client is not alloted
+ *  This calls the ramdump api in extracting the
+ *  ramdump in elf format.
+ */
+
+static int mem_share_do_ramdump(void)
+{
+	int i = 0, ret;
+	char *client_name;
+
+	for (i = 0; i < num_clients; i++) {
+
+		struct ramdump_segment *ramdump_segments_tmp = NULL;
+
+		client_name = (i == 0) ? "GPS" :
+			((i == 1) ? "FTM" : ((i == 2) ? "DIAG" : "NULL"));
+
+		if (!memblock[i].alloted) {
+			pr_err("memshare:%s memblock is not alloted\n",
+			client_name);
+			continue;
+		}
+
+		ramdump_segments_tmp = kcalloc(1,
+			sizeof(struct ramdump_segment),
+			GFP_KERNEL);
+		if (!ramdump_segments_tmp)
+			return -ENOMEM;
+
+		ramdump_segments_tmp[0].size = memblock[i].size;
+		ramdump_segments_tmp[0].address = memblock[i].phy_addr;
+
+		pr_debug("memshare: %s:%s client:phy_address = %llx, size = %d\n",
+		__func__, client_name,
+		(unsigned long long) memblock[i].phy_addr, memblock[i].size);
+
+		ret = do_elf_ramdump(memshare_ramdump_dev[i],
+					ramdump_segments_tmp, 1);
+		if (ret < 0) {
+			pr_err("memshare: Unable to dump: %d\n", ret);
+			kfree(ramdump_segments_tmp);
+			return ret;
+		}
+		kfree(ramdump_segments_tmp);
+	}
+	return 0;
+}
+
 static int modem_notifier_cb(struct notifier_block *this, unsigned long code,
 					void *_cmd)
 {
@@ -750,6 +802,8 @@ static int handle_alloc_generic_req(void *req_h, void *req, void *conn_h)
 		pr_err("memshare: %s client not found, requested client: %d, proc_id: %d\n",
 				__func__, alloc_req->client_id,
 				alloc_req->proc_id);
+		kfree(alloc_resp);
+		alloc_resp = NULL;
 		return -EINVAL;
 	}
 
@@ -807,6 +861,9 @@ static int handle_alloc_generic_req(void *req_h, void *req, void *conn_h)
 	if (rc < 0)
 		pr_err("In %s, Error sending the alloc request: %d\n",
 							__func__, rc);
+
+	kfree(alloc_resp);
+	alloc_resp = NULL;
 	return rc;
 }
 
@@ -938,6 +995,8 @@ static int handle_query_size_req(void *req_h, void *req, void *conn_h)
 		pr_err("memshare: %s client not found, requested client: %d, proc_id: %d\n",
 				__func__, query_req->client_id,
 				query_req->proc_id);
+		kfree(query_resp);
+		query_resp = NULL;
 		return -EINVAL;
 	}
 
@@ -963,6 +1022,8 @@ static int handle_query_size_req(void *req_h, void *req, void *conn_h)
 		pr_err("In %s, Error sending the query request: %d\n",
 							__func__, rc);
 
+	kfree(query_resp);
+	query_resp = NULL;
 	return rc;
 }
 

@@ -1998,6 +1998,9 @@ int uvc_ctrl_add_mapping(struct uvc_video_chain *chain,
 	if (ctrl->info.size < mapping->size)
 		return -EINVAL;
 
+	if (ctrl->info.size < mapping->size)
+		return -EINVAL;
+
 	if (mutex_lock_interruptible(&chain->ctrl_mutex))
 		return -ERESTARTSYS;
 

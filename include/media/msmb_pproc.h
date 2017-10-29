@@ -259,6 +259,8 @@ struct msm_camera_v4l2_ioctl_t {
 
 #define MSM_OUTPUT_BUF_CNT 8
 
+#define MSM_OUTPUT_BUF_CNT 8
+
 #ifdef CONFIG_COMPAT
 struct msm_cpp_frame_info32_t {
 	int32_t frame_id;

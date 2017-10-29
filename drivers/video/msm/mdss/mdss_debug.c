@@ -41,6 +41,8 @@
 
 static DEFINE_MUTEX(mdss_debug_lock);
 
+static DEFINE_MUTEX(mdss_debug_lock);
+
 static char panel_reg[2] = {DEFAULT_READ_PANEL_POWER_MODE_REG, 0x00};
 
 static int panel_debug_base_open(struct inode *inode, struct file *file)
@@ -1204,6 +1206,9 @@ int mdss_debugfs_init(struct mdss_data_type *mdata)
 	mdss_debugfs_perf_init(mdd, mdata);
 
 	if (mdss_create_xlog_debug(mdd))
+		goto err;
+
+	if (mdss_create_frc_debug(mdd))
 		goto err;
 
 	mdata->debug_inf.debug_data = mdd;
