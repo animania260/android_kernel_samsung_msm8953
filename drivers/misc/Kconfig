@@ -629,7 +629,6 @@ config QPNP_MISC
 	  and the driver provides an API to check if this interrupt
 	  is available on the current PMIC chip.
 
-<<<<<<< HEAD
 config SEC_MPP_SHARE
 	bool "Samsung MPP share"
 	help
@@ -641,7 +640,7 @@ config SEC_MPP_SHARE_LOW_TEMP_WA
 	  Say Y to include support for MUX share WA.
 	  When EAR_ADC_3.5 and BAT_THM use same MUX Switch IC,
 	  connect some non-official earphone, will cause BAT_THM Low Temp.
-=======
+
 config UID_SYS_STATS_DEBUG
 	bool "Per-TASK statistics"
 	depends on UID_SYS_STATS
@@ -654,7 +653,6 @@ config MEMORY_STATE_TIME
 	depends on PROFILING
 	help
 	  Memory time statistics exported to /sys/kernel/memory_state_time
->>>>>>> LA.UM.6.6.r1-03400-89xx.0
 
 source "drivers/misc/c2port/Kconfig"
 source "drivers/misc/eeprom/Kconfig"
