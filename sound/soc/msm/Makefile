@@ -33,19 +33,13 @@ obj-$(CONFIG_SND_SOC_MSM8X16_RT5659) += snd-soc-msm8x16-audio-pinctl.o
 snd-soc-msm8x16-objs := msm8952.o
 obj-$(CONFIG_SND_SOC_MSM8X16) += snd-soc-msm8x16.o
 
-<<<<<<< HEAD
 # for MSM 8x16/8952 rt5659 sound card driver
 snd-soc-msm8x16-rt5659-objs := msm8952_rt5659.o
 obj-$(CONFIG_SND_SOC_MSM8X16_RT5659) += snd-soc-msm8x16-rt5659.o
 
-# for MDM Californium sound card driver
-snd-soc-mdmcalifornium-objs := mdmcalifornium.o
-obj-$(CONFIG_SND_SOC_MDMCALIFORNIUM) += snd-soc-mdmcalifornium.o
-=======
 # for MDM 9650 sound card driver
 snd-soc-mdm9650-objs := mdm9650.o mdm9650-auto.o
 obj-$(CONFIG_SND_SOC_MDM9650) += snd-soc-mdm9650.o
->>>>>>> LA.UM.6.6.r1-03400-89xx.0
 
 # for MDM 9607 sound card driver
 snd-soc-mdm9607-objs := mdm9607.o
