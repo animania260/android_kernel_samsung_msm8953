@@ -344,5 +344,30 @@ config ARCH_MSM8909
 	select MSM_BIMC_BWMON
 	select ARCH_WANT_KMAP_ATOMIC_FLUSH
 
+config SEC_MSM8953_PROJECT
+  	depends on ARCH_MSM8953
+        default n
+        bool "Samsung MSM8953 Project"
+        help
+        Support for Samsung MSM8953 Project
+
 endmenu
 endif
+
+config SEC_FACTORY
+	bool "when it comes to sec factory mode"
+	default n
+	help
+	  It will support a sec factory mode
+
+config SAMSUNG_PRODUCT_SHIP
+        bool "set up for product shipping"
+        default n
+
+config RTC_AUTO_PWRON
+        bool "RTC Auto Power on PMICs"
+        depends on ARCH_MSM8953
+        default n
+        help
+          Support for the auto power on alarm on the PMIC.
+          Say Y if you want to enable this feature.

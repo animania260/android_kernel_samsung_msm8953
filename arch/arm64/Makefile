@@ -92,7 +92,13 @@ zinstall install: vmlinux
 PHONY += dtbs dtbs_install
 
 dtbs: prepare scripts
-	$(Q)$(MAKE) $(build)=$(boot)/dts
+#	$(Q)$(MAKE) $(build)=$(boot)/dts
+# MSM8953
+ifeq ($(CONFIG_ARCH_MSM8953),y)
+	$(Q)$(MAKE) $(build)=$(boot)/dts/samsung/msm8953
+else
+	$(Q)$(MAKE) $(build)=$(boot)/dts/qcom
+endif
 
 dtbs_install:
 	$(Q)$(MAKE) $(dtbinst)=$(boot)/dts
