@@ -62,6 +62,8 @@ obj-$(CONFIG_QSEECOM) += compat_qseecom.o
 endif
 obj-$(CONFIG_ECHO)		+= echo/
 obj-$(CONFIG_VEXPRESS_SYSCFG)	+= vexpress-syscfg.o
+obj-$(CONFIG_SAMSUNG_JACK)	+= sec_jack.o
+obj-$(CONFIG_SEC_MPP_SHARE)	+= sec_mux_sel.o
 obj-$(CONFIG_CXL_BASE)		+= cxl/
 obj-y				+= qcom/
 obj-$(CONFIG_TI_DRV2667) += ti_drv2667.o
